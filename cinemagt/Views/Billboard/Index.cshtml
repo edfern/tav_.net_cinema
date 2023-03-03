@@ -1,0 +1,44 @@
+﻿@using cinemagt.Models;
+@model cinemagt.Models.Functions
+
+@{
+    ViewBag.Title = "Billboard";
+}
+
+<div class="billboard">
+    @if (ViewBag.Message != null)
+    {<h1>@ViewBag.Message</h1>}
+
+    <h3>Billboard</h3>
+    <div class="movies">
+        @foreach (Functions func in ViewBag.Functions)
+        {
+            <a href="@(func.state == "A" || func.state == "P" ? Url.Action("/", "Functions", new { id = func.idFunction}) : Url.Action("ComingSoon", "Functions", new {id = func.movies.idMovie}))">
+                <div class="card">
+                    <div class="icon-movie">
+
+                    </div>
+                    @if (func.state == "P")
+                    {
+                        <div class="card--pre-sale">
+                            <div class="title">PRE-VENTA</div>
+                        </div>
+                    }
+                    @if (func.state == "C")
+                    {
+                        <div class="card--coming">
+                            <div class="title">PRÓXIMAMENTE</div>
+                        </div>
+                    }<div class="card__content"
+                          style="background-image: url(@func.movies.image)"></div>
+
+
+                </div>
+            </a>
+        }
+
+        <div />
+    </div>
+</div>
+
+

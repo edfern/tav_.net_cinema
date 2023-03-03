@@ -1,0 +1,161 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="cinemaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Functions">
+    <Key>
+      <PropertyRef Name="idFunction" />
+    </Key>
+    <Property Name="idFunction" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="idRoom" Type="Int32" />
+    <Property Name="idMovie" Type="Int32" />
+    <Property Name="time" Type="Time" Precision="7" />
+    <Property Name="startDate" Type="DateTime" Precision="0" />
+    <Property Name="endDate" Type="DateTime" Precision="0" />
+    <Property Name="state" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ticketPrice" Type="Decimal" Precision="18" Scale="2" />
+    <NavigationProperty Name="movies" Relationship="Self.FK_Functions_movies" FromRole="Functions" ToRole="movies" />
+    <NavigationProperty Name="Rooms" Relationship="Self.FK_Functions_Rooms" FromRole="Functions" ToRole="Rooms" />
+    <NavigationProperty Name="tickets" Relationship="Self.FK_Tickets_Functions" FromRole="Functions" ToRole="tickets" />
+  </EntityType>
+  <EntityType Name="movies">
+    <Key>
+      <PropertyRef Name="idMovie" />
+    </Key>
+    <Property Name="idMovie" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="description" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="image" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Functions" Relationship="Self.FK_Functions_movies" FromRole="movies" ToRole="Functions" />
+  </EntityType>
+  <EntityType Name="Rooms">
+    <Key>
+      <PropertyRef Name="idRoom" />
+    </Key>
+    <Property Name="idRoom" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="size" Type="Int32" />
+    <NavigationProperty Name="Functions" Relationship="Self.FK_Functions_Rooms" FromRole="Rooms" ToRole="Functions" />
+  </EntityType>
+  <EntityType Name="sales">
+    <Key>
+      <PropertyRef Name="idSale" />
+    </Key>
+    <Property Name="idSale" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="customerName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="total" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="date" Type="DateTime" Precision="0" />
+    <NavigationProperty Name="salesdetail" Relationship="Self.FK_salesdetail_sales" FromRole="sales" ToRole="salesdetail" />
+  </EntityType>
+  <EntityType Name="salesdetail">
+    <Key>
+      <PropertyRef Name="idSaleDetail" />
+    </Key>
+    <Property Name="idSaleDetail" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="idSale" Type="Int32" Nullable="false" />
+    <Property Name="idTicket" Type="Int32" Nullable="false" />
+    <Property Name="description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="sales" Relationship="Self.FK_salesdetail_sales" FromRole="salesdetail" ToRole="sales" />
+    <NavigationProperty Name="tickets" Relationship="Self.FK_salesdetail_Tickets" FromRole="salesdetail" ToRole="tickets" />
+  </EntityType>
+  <EntityType Name="tickets">
+    <Key>
+      <PropertyRef Name="idTicket" />
+    </Key>
+    <Property Name="idTicket" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="idFunction" Type="Int32" Nullable="false" />
+    <Property Name="date" Type="DateTime" Precision="0" />
+    <Property Name="description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="price" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="seat" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Functions" Relationship="Self.FK_Tickets_Functions" FromRole="tickets" ToRole="Functions" />
+    <NavigationProperty Name="salesdetail" Relationship="Self.FK_salesdetail_Tickets" FromRole="tickets" ToRole="salesdetail" />
+  </EntityType>
+  <Association Name="FK_Functions_movies">
+    <End Role="movies" Type="Self.movies" Multiplicity="0..1" />
+    <End Role="Functions" Type="Self.Functions" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="movies">
+        <PropertyRef Name="idMovie" />
+      </Principal>
+      <Dependent Role="Functions">
+        <PropertyRef Name="idMovie" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Functions_Rooms">
+    <End Role="Rooms" Type="Self.Rooms" Multiplicity="0..1" />
+    <End Role="Functions" Type="Self.Functions" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Rooms">
+        <PropertyRef Name="idRoom" />
+      </Principal>
+      <Dependent Role="Functions">
+        <PropertyRef Name="idRoom" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tickets_Functions">
+    <End Role="Functions" Type="Self.Functions" Multiplicity="1" />
+    <End Role="tickets" Type="Self.tickets" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Functions">
+        <PropertyRef Name="idFunction" />
+      </Principal>
+      <Dependent Role="tickets">
+        <PropertyRef Name="idFunction" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_salesdetail_sales">
+    <End Role="sales" Type="Self.sales" Multiplicity="1" />
+    <End Role="salesdetail" Type="Self.salesdetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="sales">
+        <PropertyRef Name="idSale" />
+      </Principal>
+      <Dependent Role="salesdetail">
+        <PropertyRef Name="idSale" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_salesdetail_Tickets">
+    <End Role="tickets" Type="Self.tickets" Multiplicity="1" />
+    <End Role="salesdetail" Type="Self.salesdetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tickets">
+        <PropertyRef Name="idTicket" />
+      </Principal>
+      <Dependent Role="salesdetail">
+        <PropertyRef Name="idTicket" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="CinemaConnection" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Functions" EntityType="Self.Functions" />
+    <EntitySet Name="movies" EntityType="Self.movies" />
+    <EntitySet Name="Rooms" EntityType="Self.Rooms" />
+    <EntitySet Name="sales" EntityType="Self.sales" />
+    <EntitySet Name="salesdetail" EntityType="Self.salesdetail" />
+    <EntitySet Name="tickets" EntityType="Self.tickets" />
+    <AssociationSet Name="FK_Functions_movies" Association="Self.FK_Functions_movies">
+      <End Role="movies" EntitySet="movies" />
+      <End Role="Functions" EntitySet="Functions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Functions_Rooms" Association="Self.FK_Functions_Rooms">
+      <End Role="Rooms" EntitySet="Rooms" />
+      <End Role="Functions" EntitySet="Functions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tickets_Functions" Association="Self.FK_Tickets_Functions">
+      <End Role="Functions" EntitySet="Functions" />
+      <End Role="tickets" EntitySet="tickets" />
+    </AssociationSet>
+    <AssociationSet Name="FK_salesdetail_sales" Association="Self.FK_salesdetail_sales">
+      <End Role="sales" EntitySet="sales" />
+      <End Role="salesdetail" EntitySet="salesdetail" />
+    </AssociationSet>
+    <AssociationSet Name="FK_salesdetail_Tickets" Association="Self.FK_salesdetail_Tickets">
+      <End Role="tickets" EntitySet="tickets" />
+      <End Role="salesdetail" EntitySet="salesdetail" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

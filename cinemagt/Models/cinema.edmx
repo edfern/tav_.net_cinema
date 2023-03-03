@@ -1,0 +1,414 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="cinemaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Functions">
+          <Key>
+            <PropertyRef Name="idFunction" />
+          </Key>
+          <Property Name="idFunction" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idRoom" Type="int" />
+          <Property Name="idMovie" Type="int" />
+          <Property Name="time" Type="time" Precision="7" />
+          <Property Name="startDate" Type="date" />
+          <Property Name="endDate" Type="date" />
+          <Property Name="state" Type="varchar" MaxLength="50" />
+          <Property Name="ticketPrice" Type="decimal" Precision="18" Scale="2" />
+        </EntityType>
+        <EntityType Name="movies">
+          <Key>
+            <PropertyRef Name="idMovie" />
+          </Key>
+          <Property Name="idMovie" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" />
+          <Property Name="description" Type="nvarchar" MaxLength="50" />
+          <Property Name="image" Type="varchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="Rooms">
+          <Key>
+            <PropertyRef Name="idRoom" />
+          </Key>
+          <Property Name="idRoom" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="50" />
+          <Property Name="description" Type="varchar" MaxLength="50" />
+          <Property Name="size" Type="int" />
+        </EntityType>
+        <EntityType Name="sales">
+          <Key>
+            <PropertyRef Name="idSale" />
+          </Key>
+          <Property Name="idSale" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="customerName" Type="varchar" MaxLength="50" />
+          <Property Name="total" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="date" Type="date" />
+        </EntityType>
+        <EntityType Name="salesdetail">
+          <Key>
+            <PropertyRef Name="idSaleDetail" />
+          </Key>
+          <Property Name="idSaleDetail" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idSale" Type="int" Nullable="false" />
+          <Property Name="idTicket" Type="int" Nullable="false" />
+          <Property Name="description" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="tickets">
+          <Key>
+            <PropertyRef Name="idTicket" />
+          </Key>
+          <Property Name="idTicket" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idFunction" Type="int" Nullable="false" />
+          <Property Name="date" Type="date" />
+          <Property Name="description" Type="varchar" MaxLength="50" />
+          <Property Name="price" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="seat" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_Functions_movies">
+          <End Role="movies" Type="Self.movies" Multiplicity="0..1" />
+          <End Role="Functions" Type="Self.Functions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="movies">
+              <PropertyRef Name="idMovie" />
+            </Principal>
+            <Dependent Role="Functions">
+              <PropertyRef Name="idMovie" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Functions_Rooms">
+          <End Role="Rooms" Type="Self.Rooms" Multiplicity="0..1" />
+          <End Role="Functions" Type="Self.Functions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rooms">
+              <PropertyRef Name="idRoom" />
+            </Principal>
+            <Dependent Role="Functions">
+              <PropertyRef Name="idRoom" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_salesdetail_sales">
+          <End Role="sales" Type="Self.sales" Multiplicity="1" />
+          <End Role="salesdetail" Type="Self.salesdetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="sales">
+              <PropertyRef Name="idSale" />
+            </Principal>
+            <Dependent Role="salesdetail">
+              <PropertyRef Name="idSale" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_salesdetail_Tickets">
+          <End Role="tickets" Type="Self.tickets" Multiplicity="1" />
+          <End Role="salesdetail" Type="Self.salesdetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tickets">
+              <PropertyRef Name="idTicket" />
+            </Principal>
+            <Dependent Role="salesdetail">
+              <PropertyRef Name="idTicket" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tickets_Functions">
+          <End Role="Functions" Type="Self.Functions" Multiplicity="1" />
+          <End Role="tickets" Type="Self.tickets" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Functions">
+              <PropertyRef Name="idFunction" />
+            </Principal>
+            <Dependent Role="tickets">
+              <PropertyRef Name="idFunction" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="cinemaModelStoreContainer">
+          <EntitySet Name="Functions" EntityType="Self.Functions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="movies" EntityType="Self.movies" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Rooms" EntityType="Self.Rooms" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sales" EntityType="Self.sales" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="salesdetail" EntityType="Self.salesdetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tickets" EntityType="Self.tickets" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Functions_movies" Association="Self.FK_Functions_movies">
+            <End Role="movies" EntitySet="movies" />
+            <End Role="Functions" EntitySet="Functions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Functions_Rooms" Association="Self.FK_Functions_Rooms">
+            <End Role="Rooms" EntitySet="Rooms" />
+            <End Role="Functions" EntitySet="Functions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_salesdetail_sales" Association="Self.FK_salesdetail_sales">
+            <End Role="sales" EntitySet="sales" />
+            <End Role="salesdetail" EntitySet="salesdetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_salesdetail_Tickets" Association="Self.FK_salesdetail_Tickets">
+            <End Role="tickets" EntitySet="tickets" />
+            <End Role="salesdetail" EntitySet="salesdetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tickets_Functions" Association="Self.FK_Tickets_Functions">
+            <End Role="Functions" EntitySet="Functions" />
+            <End Role="tickets" EntitySet="tickets" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="cinemaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Functions">
+          <Key>
+            <PropertyRef Name="idFunction" />
+          </Key>
+          <Property Name="idFunction" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idRoom" Type="Int32" />
+          <Property Name="idMovie" Type="Int32" />
+          <Property Name="time" Type="Time" Precision="7" />
+          <Property Name="startDate" Type="DateTime" Precision="0" />
+          <Property Name="endDate" Type="DateTime" Precision="0" />
+          <Property Name="state" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ticketPrice" Type="Decimal" Precision="18" Scale="2" />
+          <NavigationProperty Name="movies" Relationship="Self.FK_Functions_movies" FromRole="Functions" ToRole="movies" />
+          <NavigationProperty Name="Rooms" Relationship="Self.FK_Functions_Rooms" FromRole="Functions" ToRole="Rooms" />
+          <NavigationProperty Name="tickets" Relationship="Self.FK_Tickets_Functions" FromRole="Functions" ToRole="tickets" />
+        </EntityType>
+        <EntityType Name="movies">
+          <Key>
+            <PropertyRef Name="idMovie" />
+          </Key>
+          <Property Name="idMovie" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="description" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="image" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Functions" Relationship="Self.FK_Functions_movies" FromRole="movies" ToRole="Functions" />
+        </EntityType>
+        <EntityType Name="Rooms">
+          <Key>
+            <PropertyRef Name="idRoom" />
+          </Key>
+          <Property Name="idRoom" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="size" Type="Int32" />
+          <NavigationProperty Name="Functions" Relationship="Self.FK_Functions_Rooms" FromRole="Rooms" ToRole="Functions" />
+        </EntityType>
+        <EntityType Name="sales">
+          <Key>
+            <PropertyRef Name="idSale" />
+          </Key>
+          <Property Name="idSale" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="customerName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="total" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="date" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="salesdetail" Relationship="Self.FK_salesdetail_sales" FromRole="sales" ToRole="salesdetail" />
+        </EntityType>
+        <EntityType Name="salesdetail">
+          <Key>
+            <PropertyRef Name="idSaleDetail" />
+          </Key>
+          <Property Name="idSaleDetail" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idSale" Type="Int32" Nullable="false" />
+          <Property Name="idTicket" Type="Int32" Nullable="false" />
+          <Property Name="description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="sales" Relationship="Self.FK_salesdetail_sales" FromRole="salesdetail" ToRole="sales" />
+          <NavigationProperty Name="tickets" Relationship="Self.FK_salesdetail_Tickets" FromRole="salesdetail" ToRole="tickets" />
+        </EntityType>
+        <EntityType Name="tickets">
+          <Key>
+            <PropertyRef Name="idTicket" />
+          </Key>
+          <Property Name="idTicket" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idFunction" Type="Int32" Nullable="false" />
+          <Property Name="date" Type="DateTime" Precision="0" />
+          <Property Name="description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="price" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="seat" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Functions" Relationship="Self.FK_Tickets_Functions" FromRole="tickets" ToRole="Functions" />
+          <NavigationProperty Name="salesdetail" Relationship="Self.FK_salesdetail_Tickets" FromRole="tickets" ToRole="salesdetail" />
+        </EntityType>
+        <Association Name="FK_Functions_movies">
+          <End Role="movies" Type="Self.movies" Multiplicity="0..1" />
+          <End Role="Functions" Type="Self.Functions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="movies">
+              <PropertyRef Name="idMovie" />
+            </Principal>
+            <Dependent Role="Functions">
+              <PropertyRef Name="idMovie" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Functions_Rooms">
+          <End Role="Rooms" Type="Self.Rooms" Multiplicity="0..1" />
+          <End Role="Functions" Type="Self.Functions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rooms">
+              <PropertyRef Name="idRoom" />
+            </Principal>
+            <Dependent Role="Functions">
+              <PropertyRef Name="idRoom" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tickets_Functions">
+          <End Role="Functions" Type="Self.Functions" Multiplicity="1" />
+          <End Role="tickets" Type="Self.tickets" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Functions">
+              <PropertyRef Name="idFunction" />
+            </Principal>
+            <Dependent Role="tickets">
+              <PropertyRef Name="idFunction" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_salesdetail_sales">
+          <End Role="sales" Type="Self.sales" Multiplicity="1" />
+          <End Role="salesdetail" Type="Self.salesdetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="sales">
+              <PropertyRef Name="idSale" />
+            </Principal>
+            <Dependent Role="salesdetail">
+              <PropertyRef Name="idSale" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_salesdetail_Tickets">
+          <End Role="tickets" Type="Self.tickets" Multiplicity="1" />
+          <End Role="salesdetail" Type="Self.salesdetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tickets">
+              <PropertyRef Name="idTicket" />
+            </Principal>
+            <Dependent Role="salesdetail">
+              <PropertyRef Name="idTicket" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CinemaConnection" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Functions" EntityType="Self.Functions" />
+          <EntitySet Name="movies" EntityType="Self.movies" />
+          <EntitySet Name="Rooms" EntityType="Self.Rooms" />
+          <EntitySet Name="sales" EntityType="Self.sales" />
+          <EntitySet Name="salesdetail" EntityType="Self.salesdetail" />
+          <EntitySet Name="tickets" EntityType="Self.tickets" />
+          <AssociationSet Name="FK_Functions_movies" Association="Self.FK_Functions_movies">
+            <End Role="movies" EntitySet="movies" />
+            <End Role="Functions" EntitySet="Functions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Functions_Rooms" Association="Self.FK_Functions_Rooms">
+            <End Role="Rooms" EntitySet="Rooms" />
+            <End Role="Functions" EntitySet="Functions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tickets_Functions" Association="Self.FK_Tickets_Functions">
+            <End Role="Functions" EntitySet="Functions" />
+            <End Role="tickets" EntitySet="tickets" />
+          </AssociationSet>
+          <AssociationSet Name="FK_salesdetail_sales" Association="Self.FK_salesdetail_sales">
+            <End Role="sales" EntitySet="sales" />
+            <End Role="salesdetail" EntitySet="salesdetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_salesdetail_Tickets" Association="Self.FK_salesdetail_Tickets">
+            <End Role="tickets" EntitySet="tickets" />
+            <End Role="salesdetail" EntitySet="salesdetail" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="cinemaModelStoreContainer" CdmEntityContainer="CinemaConnection">
+          <EntitySetMapping Name="Functions">
+            <EntityTypeMapping TypeName="cinemaModel.Functions">
+              <MappingFragment StoreEntitySet="Functions">
+                <ScalarProperty Name="idFunction" ColumnName="idFunction" />
+                <ScalarProperty Name="idRoom" ColumnName="idRoom" />
+                <ScalarProperty Name="idMovie" ColumnName="idMovie" />
+                <ScalarProperty Name="time" ColumnName="time" />
+                <ScalarProperty Name="startDate" ColumnName="startDate" />
+                <ScalarProperty Name="endDate" ColumnName="endDate" />
+                <ScalarProperty Name="state" ColumnName="state" />
+                <ScalarProperty Name="ticketPrice" ColumnName="ticketPrice" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="movies">
+            <EntityTypeMapping TypeName="cinemaModel.movies">
+              <MappingFragment StoreEntitySet="movies">
+                <ScalarProperty Name="idMovie" ColumnName="idMovie" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="image" ColumnName="image" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Rooms">
+            <EntityTypeMapping TypeName="cinemaModel.Rooms">
+              <MappingFragment StoreEntitySet="Rooms">
+                <ScalarProperty Name="idRoom" ColumnName="idRoom" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="size" ColumnName="size" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sales">
+            <EntityTypeMapping TypeName="cinemaModel.sales">
+              <MappingFragment StoreEntitySet="sales">
+                <ScalarProperty Name="idSale" ColumnName="idSale" />
+                <ScalarProperty Name="customerName" ColumnName="customerName" />
+                <ScalarProperty Name="total" ColumnName="total" />
+                <ScalarProperty Name="date" ColumnName="date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="salesdetail">
+            <EntityTypeMapping TypeName="cinemaModel.salesdetail">
+              <MappingFragment StoreEntitySet="salesdetail">
+                <ScalarProperty Name="idSaleDetail" ColumnName="idSaleDetail" />
+                <ScalarProperty Name="idSale" ColumnName="idSale" />
+                <ScalarProperty Name="idTicket" ColumnName="idTicket" />
+                <ScalarProperty Name="description" ColumnName="description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tickets">
+            <EntityTypeMapping TypeName="cinemaModel.tickets">
+              <MappingFragment StoreEntitySet="tickets">
+                <ScalarProperty Name="idTicket" ColumnName="idTicket" />
+                <ScalarProperty Name="idFunction" ColumnName="idFunction" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="seat" ColumnName="seat" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

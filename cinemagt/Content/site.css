@@ -1,0 +1,199 @@
+﻿@import url('https://fonts.googleapis.com/css2?family=Lato:ital@1&display=swap');
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Lato', sans-serif;
+}
+
+body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+    font-family: 'Lato', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+.header {
+    padding: 0 10px;
+    position: fixed;
+    top: 0;
+    min-height: 50px;
+    height: 50px;
+    width: 100%;
+    box-shadow: #0000008c 0px 0.063rem 0.3rem 0px;
+    z-index: 10;
+    display: flex;
+    background-color: white;
+}
+
+.logo {
+    width: 100px;
+    height: inherit;
+    background-image: url('../Assets/images/logo.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.nav {
+    display: flex;
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    width: max-content;
+    height: inherit;
+    align-items: center;
+    color: #707070;
+}
+
+.nav ul {
+    display: flex;
+    list-style: none;
+    gap: 30px;
+}
+
+.nav ul li{
+    color: inherit;
+}
+
+.nav ul li a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.nav ul li a:hover{
+    color: black;
+}
+
+/*
+    card
+*/
+
+.card {
+    border-radius: 10px;
+    width: 240px;
+    height: 410px;
+    overflow: hidden;
+    transition: all 150ms ease-in-out;
+    position: relative;
+}
+
+.card--pre-sale {
+    top: 0;
+    backdrop-filter: blur(27px);
+}
+
+.card--pre-sale, .card--coming, .card--function {
+    position: absolute;
+    background-color: rgb(0 0 0 / 38%);
+    width: 100%;
+    height: 40px;
+    -webkit-backdrop-filter: blur(4px);
+    backdrop-filter: blur(27px);
+    z-index: 1;
+    font-size: large;
+    color: cornsilk;
+}
+
+.card--pre-sale .title, .card--coming .title, .card--function .title{
+    display: flex;
+    width: inherit;
+    height: inherit;
+    justify-content: center;
+    align-items: center;
+}
+
+.card__content {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: inherit;
+    height: inherit;
+    transition: all 150ms ease-in-out;
+}
+
+.card:hover > .card__content {
+    opacity: 0.8;
+    filter: blur(1px);
+    scale: 1.03;
+}
+
+.card:hover .icon-movie {
+    opacity: 1;
+    z-index: 1;
+}
+
+.icon-movie {
+    color: white;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    opacity: 0;
+    transition: all 150ms ease-in-out;
+}
+
+.card-form {
+    border-radius: 5px;
+    background-color: #ffffff;
+    box-shadow: rgb(0 0 0 / 18%) 0px 0.063rem 0.3rem 0px;
+    transition: all 150ms ease-in-out;
+    padding: 20px 10px;
+    margin-top: 20px;
+}
+
+.card-form:hover{
+    box-shadow: rgb(0 0 0 / 20%) 0px 0.063rem 0.3rem 3px;
+}
+
+.shadow {
+    box-shadow: rgb(0 0 0 / 18%) 0px 0.063rem 0.3rem 0px;
+}
+
+.shadow:hover{
+    box-shadow: rgb(0 0 0 / 18%) 0px 0.063rem 0.3rem 3px;
+}
+
+/*
+    sections
+*/
+
+.movies {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 20px;
+    justify-items: center;
+    margin-top: 0px;
+}
+
+.billboard {
+    padding: 20px 0;
+}
+
+.billboard h3 {
+    margin-bottom: 20px;
+}

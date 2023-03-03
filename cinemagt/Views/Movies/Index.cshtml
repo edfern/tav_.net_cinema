@@ -1,0 +1,52 @@
+﻿@using cinemagt.Models
+@model cinemagt.Models.movies
+
+<div class="section">
+    <div class="">
+        <h3>Movies</h3>
+        @if (ViewBag.Movies != null)
+        {
+            foreach (movies mov in ViewBag.Movies)
+            {
+                <details class="item">
+                    <summary class="item__header">
+                        <strong>@mov.name</strong>
+                    </summary>
+                    <div class="item__content">
+                        <div class="item__description">
+                            <div>
+                                <h4>Information</h4>
+                                <p>@mov.description</p>
+                                <p>@mov.image</p>
+                            </div>
+                        </div>
+                        <div className="actions-item">
+                            <button>
+                                Edit
+                            </button>
+                            <button>
+                                Delete
+                            </button>
+                        </div>
+                    </div>
+                </details>
+
+            }
+        }
+        else
+        {
+            <h1>No movies</h1>
+        }
+
+
+    </div>
+    <div className="actions-page">
+        <Button size="small"
+                variant="outlined"
+                color="primary">
+            Create
+        </Button>
+
+    </div>
+</div>
+

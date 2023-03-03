@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="cinemaModelStoreContainer" CdmEntityContainer="CinemaConnection">
+    <EntitySetMapping Name="Functions">
+      <EntityTypeMapping TypeName="cinemaModel.Functions">
+        <MappingFragment StoreEntitySet="Functions">
+          <ScalarProperty Name="idFunction" ColumnName="idFunction" />
+          <ScalarProperty Name="idRoom" ColumnName="idRoom" />
+          <ScalarProperty Name="idMovie" ColumnName="idMovie" />
+          <ScalarProperty Name="time" ColumnName="time" />
+          <ScalarProperty Name="startDate" ColumnName="startDate" />
+          <ScalarProperty Name="endDate" ColumnName="endDate" />
+          <ScalarProperty Name="state" ColumnName="state" />
+          <ScalarProperty Name="ticketPrice" ColumnName="ticketPrice" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="movies">
+      <EntityTypeMapping TypeName="cinemaModel.movies">
+        <MappingFragment StoreEntitySet="movies">
+          <ScalarProperty Name="idMovie" ColumnName="idMovie" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="description" ColumnName="description" />
+          <ScalarProperty Name="image" ColumnName="image" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Rooms">
+      <EntityTypeMapping TypeName="cinemaModel.Rooms">
+        <MappingFragment StoreEntitySet="Rooms">
+          <ScalarProperty Name="idRoom" ColumnName="idRoom" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="description" ColumnName="description" />
+          <ScalarProperty Name="size" ColumnName="size" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="sales">
+      <EntityTypeMapping TypeName="cinemaModel.sales">
+        <MappingFragment StoreEntitySet="sales">
+          <ScalarProperty Name="idSale" ColumnName="idSale" />
+          <ScalarProperty Name="customerName" ColumnName="customerName" />
+          <ScalarProperty Name="total" ColumnName="total" />
+          <ScalarProperty Name="date" ColumnName="date" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="salesdetail">
+      <EntityTypeMapping TypeName="cinemaModel.salesdetail">
+        <MappingFragment StoreEntitySet="salesdetail">
+          <ScalarProperty Name="idSaleDetail" ColumnName="idSaleDetail" />
+          <ScalarProperty Name="idSale" ColumnName="idSale" />
+          <ScalarProperty Name="idTicket" ColumnName="idTicket" />
+          <ScalarProperty Name="description" ColumnName="description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tickets">
+      <EntityTypeMapping TypeName="cinemaModel.tickets">
+        <MappingFragment StoreEntitySet="tickets">
+          <ScalarProperty Name="idTicket" ColumnName="idTicket" />
+          <ScalarProperty Name="idFunction" ColumnName="idFunction" />
+          <ScalarProperty Name="date" ColumnName="date" />
+          <ScalarProperty Name="description" ColumnName="description" />
+          <ScalarProperty Name="price" ColumnName="price" />
+          <ScalarProperty Name="seat" ColumnName="seat" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

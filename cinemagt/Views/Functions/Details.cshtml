@@ -1,0 +1,11 @@
+﻿@using cinemagt.Models;
+@model cinemagt.Models.Functions
+
+
+@{
+    var function = (Functions) ViewBag.Function;
+    ViewBag.Title = (function !=null) ? function.movies.name : "Not available";
+}
+
+
+<div>@function.startDate</div>

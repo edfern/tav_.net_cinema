@@ -1,0 +1,5 @@
+C:\Users\ed_fe\Documents\projects-.net-core\cinemagt\obj\Debug\net7.0\cinemagt.csproj.AssemblyReference.cache
+C:\Users\ed_fe\Documents\projects-.net-core\cinemagt\obj\Debug\net7.0\cinemagt.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\ed_fe\Documents\projects-.net-core\cinemagt\obj\Debug\net7.0\cinemagt.AssemblyInfoInputs.cache
+C:\Users\ed_fe\Documents\projects-.net-core\cinemagt\obj\Debug\net7.0\cinemagt.AssemblyInfo.cs
+C:\Users\ed_fe\Documents\projects-.net-core\cinemagt\obj\Debug\net7.0\cinemagt.csproj.CoreCompileInputs.cache
